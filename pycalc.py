@@ -5,6 +5,7 @@
 """PyCalc is a simple calculator built using Python and qtpy."""
 
 import sys
+from functools import partial
 
 from qtpy.QtCore import Qt
 
@@ -89,6 +90,29 @@ class PyCalcUi(QMainWindow):
         self.setDisplayText("")
 
 
+class PyCalcCtrl:
+    """PyCalc Controller class."""
+
+    def __init__(self, view):
+        """Controller initializer."""
+        self._view = view
+        # Connect signals and slots
+        self._connectSignals()
+
+    def _buildExpression(self, sub_exp):
+        """Build expression."""
+        expression = self._view.displayText() + sub_exp
+        self._view.setDisplayText(expression)
+
+    def _connectSignals(self):
+        """Connect signals and slots."""
+        for btnText, btn in self._view.buttons.items():
+            if btnText not in {"=", "C"}:
+                btn.clicked.connect(partial(self._buildExpression, btnText))
+
+        self._view.buttons["C"].clicked.connect(self._view.clearDisplay)
+
+
 # Client code
 def main():
     """Main function."""
@@ -97,6 +121,7 @@ def main():
     # Show the calculator's GUI
     view = PyCalcUi()
     view.show()
+    PyCalcCtrl(view=view)
     # Execute the calculator's main loop
     sys.exit(pycalc.exec_())
 
