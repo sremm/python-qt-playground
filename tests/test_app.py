@@ -1,8 +1,10 @@
-from qtpy.QtWidgets import QWidget
+from pycalc import PyCalcUi
 
 
-def test_hello(qtbot):
-    widget = QWidget()
-    qtbot.addWidget(widget)
+class TestPyCalcUi:
+    def test_open_and_close(self, qtbot):
+        pycalcUI = PyCalcUi()
+        qtbot.addWidget(pycalcUI)
 
-    assert True
+        pycalcUI.show()
+        pycalcUI.close()
