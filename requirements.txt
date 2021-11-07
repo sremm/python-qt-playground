@@ -2,3 +2,5 @@ qtpy
 pyqt5
 mypy
 black
+pytest
+pytest-qt
