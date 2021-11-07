@@ -142,15 +142,20 @@ class PyCalcCtrl:
         self._view.buttons["C"].clicked.connect(self._view.clearDisplay)
 
 
+def initiate_mvc() -> PyCalcUi:
+    view = PyCalcUi()
+    PyCalcCtrl(model=evaluateExpression, view=view)
+    return view
+
+
 # Client code
 def main():
     """Main function."""
     # Create an instance of QApplication
     pycalc = QApplication(sys.argv)
     # Show the calculator's GUI
-    view = PyCalcUi()
+    view = initiate_mvc()
     view.show()
-    PyCalcCtrl(model=evaluateExpression, view=view)
     # Execute the calculator's main loop
     sys.exit(pycalc.exec_())
 

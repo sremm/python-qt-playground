@@ -1,4 +1,4 @@
-from pycalc import PyCalcCtrl, PyCalcUi, evaluateExpression
+from pycalc import PyCalcCtrl, PyCalcUi, evaluateExpression, initiate_mvc
 from qtpy.QtCore import Qt
 
 
@@ -11,22 +11,20 @@ class TestPyCalcUi:
         pycalcUI.close()
 
     def test_add_expression_and_compute_result(self, qtbot):
-        pycalcUI = PyCalcUi()
-        qtbot.addWidget(pycalcUI)
+        view = initiate_mvc()
+        qtbot.addWidget(view)
 
-        PyCalcCtrl(view=pycalcUI, model=evaluateExpression)
+        view.show()
 
-        pycalcUI.show()
+        qtbot.mouseClick(view.buttons["1"], Qt.MouseButton.LeftButton)
+        qtbot.mouseClick(view.buttons["+"], Qt.MouseButton.LeftButton)
+        qtbot.mouseClick(view.buttons["2"], Qt.MouseButton.LeftButton)
+        initial_display_contents = view.displayText()
 
-        qtbot.mouseClick(pycalcUI.buttons["1"], Qt.MouseButton.LeftButton)
-        qtbot.mouseClick(pycalcUI.buttons["+"], Qt.MouseButton.LeftButton)
-        qtbot.mouseClick(pycalcUI.buttons["2"], Qt.MouseButton.LeftButton)
-        initial_display_contents = pycalcUI.displayText()
+        qtbot.mouseClick(view.buttons["="], Qt.MouseButton.LeftButton)
+        final_display_contents = view.displayText()
 
-        qtbot.mouseClick(pycalcUI.buttons["="], Qt.MouseButton.LeftButton)
-        final_display_contents = pycalcUI.displayText()
-
-        pycalcUI.close()
+        view.close()
 
         assert initial_display_contents == "1+2"
         assert final_display_contents == "3"
