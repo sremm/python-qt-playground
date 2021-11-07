@@ -1,4 +1,4 @@
-from pycalc import PyCalcCtrl, PyCalcUi, evaluateExpression, initiate_mvc
+from pycalc import PyCalcUi, initiate_mvc
 from qtpy.QtCore import Qt
 
 
