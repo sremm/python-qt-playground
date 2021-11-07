@@ -2,17 +2,32 @@
 
 import sys
 
+from PyQt5.QtWidgets import QLineEdit, QPushButton, QVBoxLayout
 from qtpy.QtWidgets import QApplication, QLabel, QWidget
 
 # 2. Create an instance of QApplication
 app = QApplication(sys.argv)
-# 3. Create an instance of your application's GUI
+
+
 window = QWidget()
 window.setWindowTitle("PyQt5 App")
 window.setGeometry(100, 100, 280, 80)
 window.move(60, 15)
-helloMsg = QLabel("<h1>Hello World!</h1>", parent=window)
+
+vertical_box_layout = QVBoxLayout()
+
+helloMsg = QLabel("<h1>Hello World!</h1>")
 helloMsg.move(60, 15)
+
+text_box = QLineEdit()
+
+button = QPushButton()
+button.setText("I am a button.")
+
+vertical_box_layout.addWidget(helloMsg)
+vertical_box_layout.addWidget(text_box)
+vertical_box_layout.addWidget(button)
+window.setLayout(vertical_box_layout)
 
 # 4. Show your application's GUI
 window.show()
